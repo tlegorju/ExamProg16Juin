@@ -25,6 +25,7 @@ public class Train : MonoBehaviour
     void Start()
     {
         InitializeJointConnection();
+        units[0].rail = rail;
         //rail.GetPositionNormalTangent(0, out pos, out normal, out tangent, out segmentindex);
         //units[0].transform.position = pos;
     }
@@ -38,10 +39,19 @@ public class Train : MonoBehaviour
         int tmpCurrSegmentIndex = -1;
 
         rail.GetPositionNormalTangent(travelledDistance / rail.Length, out tmpPos, out tmpNormal, out tmpTangent, out tmpCurrSegmentIndex);
-        transform.position = tmpPos;
-        transform.rotation = Quaternion.LookRotation(tmpTangent, tmpNormal);
+        /*transform.position = tmpPos;
+        transform.rotation = Quaternion.LookRotation(tmpTangent, tmpNormal);*/
+
+        for(int i=0; i<units.Length; i++)
+        {
+            units[i].AlignUnitOnRail(travelledDistance, speed);
+        }
 
         travelledDistance += Time.deltaTime * speed;
+        if(travelledDistance>rail.Length)
+            travelledDistance-=rail.Length;
+        else if(travelledDistance<0)
+            travelledDistance+=rail.Length;
     }
 
     private void InitializeJointConnection()
