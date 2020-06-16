@@ -88,10 +88,10 @@ namespace SimpleRailwaySystem
             }
         }
 
-        public float Length { get { return m_RailBaseSpline.Length; } }
+        public float Length { get { return RailBaseSpline.Length; } }
         public Vector3 this[float t]
         { // t between 0 ad 1
-            get { return m_RailBaseSpline[t]; }
+            get { return RailBaseSpline[t]; }
         }
 
         public bool GetPositionNormalTangent(float t, out Vector3 pos, out Vector3 normal, out Vector3 tangent, out int segmentIndex)

@@ -18,7 +18,7 @@ public class TrainUnit : MonoBehaviour
 
     private RailManager rail;
 
-    public float ratioWheelRotationSpeed=10;
+    public float ratioWheelRotationSpeed=100;
 
     public float distanceTrainToUnit;
     public float distanceUnitToFrontBogie;
@@ -85,12 +85,6 @@ public class TrainUnit : MonoBehaviour
         //AlignCabinOnBogies();
         OscillCabin(speed);
         TurnWheel(speed);
-    }
-
-    public void AlignCabinOnBogies()
-    {
-        //cabin.transform.rotation = Quaternion.Slerp(bogies[0].transform.rotation, bogies[1].transform.rotation,0.5f);
-
     }
 
     public void OscillCabin(float speed)
