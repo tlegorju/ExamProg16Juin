@@ -126,7 +126,7 @@ public class MySpline
             pos = Vector3.Lerp(pt0, pt1, k);
             if (m_HasNormals) normal = Vector3.Slerp(normal0, normal1, k);
             tangent = Vector3.Slerp(tangent0, tangent1, k);
-
+            
             return true;
         }
 
@@ -174,7 +174,7 @@ public class MySpline
         if (ctrlNormals != null) m_CtrlNormals = new List<Vector3>(ctrlNormals);
         m_PtsDensity = ptsDensity;
 
-        m_PtsForDistance = new int [(int)m_Length+5];
+       
         
         if (closed)
         {
@@ -235,7 +235,7 @@ public class MySpline
 
         if (closed) m_Length += Vector3.Distance(m_Pts[0], m_Pts[m_Pts.Count - 1]);
         prevPt = Vector3.zero;
-        Debug.Log(m_Length);
+        m_PtsForDistance = new int[(int)m_Length + 1];
         float distPOtoPx=0.0f;
         for(int h = 0; h < m_Pts.Count; h++)
         {
