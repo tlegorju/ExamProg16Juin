@@ -24,10 +24,8 @@ public class Train : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitializeJointConnection();
-        units[0].rail = rail;
-        //rail.GetPositionNormalTangent(0, out pos, out normal, out tangent, out segmentindex);
-        //units[0].transform.position = pos;
+        InitializeWagons();
+        
     }
 
     // Update is called once per frame
@@ -54,16 +52,33 @@ public class Train : MonoBehaviour
             travelledDistance+=rail.Length;
     }
 
-    private void InitializeJointConnection()
+    private void InitializeWagons()
     {
+        units[0].Initialize(rail);
+        units[0].InitializeDistanceToParent(this);
+
         if(units.Length < 2)
             return;
-        units[0].RearAttachPoint.connectedBody = units[1].GetComponent<Rigidbody>();
+        
         for(int i=1;i<units.Length-1; i++)
         {
-            units[i].FrontAttachPoint.connectedBody = units[i-1].GetComponent<Rigidbody>();
-            units[i].RearAttachPoint.connectedBody = units[i+1].GetComponent<Rigidbody>();
+            units[i].Initialize(rail);
+            units[i].transform.position = units[i-1].transform.position - new Vector3(0,0,units[i-1].distanceToRearAttach + units[i].distanceToFrontAttach);
+            units[i].InitializeDistanceToParent(this);
         }
-        units[units.Length-1].FrontAttachPoint.connectedBody = units[units.Length-2].GetComponent<Rigidbody>();
+        units[units.Length-1].Initialize(rail);
+        units[units.Length-1].transform.position = units[units.Length-2].transform.position - new Vector3(0,0,units[units.Length-2].distanceToRearAttach + units[units.Length-1].distanceToFrontAttach);
+        units[units.Length-1].InitializeDistanceToParent(this);
+        Debug.Log(units[units.Length-2].transform.position - new Vector3(0,0,units[units.Length-2].distanceToRearAttach + units[units.Length-1].distanceToFrontAttach));
+    }
+    
+    public static float GetZDistance(Vector3 a, Vector3 b)
+    {
+        return Mathf.Abs(b.z-a.z);
+    }
+
+    public static float GetZDistance(float a, float b)
+    {
+        return Mathf.Abs(b-a);
     }
 }
