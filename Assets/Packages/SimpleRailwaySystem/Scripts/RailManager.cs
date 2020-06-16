@@ -96,13 +96,13 @@ namespace SimpleRailwaySystem
 
         public bool GetPositionNormalTangent(float t, out Vector3 pos, out Vector3 normal, out Vector3 tangent, out int segmentIndex)
         {
-            return m_RailBaseSpline.GetPositionNormalTangent(t, out pos, out normal, out tangent, out segmentIndex);
+            return RailBaseSpline.GetPositionNormalTangent(t, out pos, out normal, out tangent, out segmentIndex);
         }
 
         public bool GetSphereRailIntersection(Vector3 sphCenter, float sphRadius, int startIndex, int searchDir,
             out Vector3 pos, out Vector3 normal, out Vector3 tangent, out int segmentIndex)
         {
-            return m_RailBaseSpline.GetSphereSplineIntersection(sphCenter, sphRadius, startIndex, searchDir,
+            return RailBaseSpline.GetSphereSplineIntersection(sphCenter, sphRadius, startIndex, searchDir,
             out pos, out normal, out tangent, out segmentIndex);
         }
 
