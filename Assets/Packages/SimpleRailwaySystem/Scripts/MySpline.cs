@@ -13,6 +13,7 @@ public class MySpline
     List<Vector3> m_Pts = null;
     List<Vector3> m_Normals = null;
     List<Vector3> m_Tangents = null;
+    int[] m_PtsForDistance = null;
 
     public int NPts { get { return m_Pts == null ? -1 : m_Pts.Count; } }
     float m_PtsDensity;
@@ -173,6 +174,8 @@ public class MySpline
         if (ctrlNormals != null) m_CtrlNormals = new List<Vector3>(ctrlNormals);
         m_PtsDensity = ptsDensity;
 
+        m_PtsForDistance = new int [(int)m_Length+5];
+        
         if (closed)
         {
             Vector3 ctrlPt0 = ctrlPts[0];
@@ -231,7 +234,23 @@ public class MySpline
         }
 
         if (closed) m_Length += Vector3.Distance(m_Pts[0], m_Pts[m_Pts.Count - 1]);
-
+        prevPt = Vector3.zero;
+        Debug.Log(m_Length);
+        float distPOtoPx=0.0f;
+        for(int h = 0; h < m_Pts.Count; h++)
+        {
+            for (int i = 0; i < (int)m_Length + 1; i++)
+            {
+                distPOtoPx = Vector3.Distance(prevPt, m_Pts[h]) + distPOtoPx;
+                if (distPOtoPx < i)
+                {
+                    m_PtsForDistance[i] = h;
+                }
+                prevPt = m_Pts[h];
+            }
+        }
+        
+        
         m_IsValid = true;
     }
 
