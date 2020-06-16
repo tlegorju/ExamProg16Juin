@@ -241,7 +241,7 @@ namespace SimpleRailwaySystem
             GenerateRailSleepers();
         }
 
-#if UNIY_EDITOR
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
